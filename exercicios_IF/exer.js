@@ -63,24 +63,22 @@ function menu() {
 //////////////////////////////////////////////////////
 
 function exercicio1() {
-  let totalSegundos = parseInt(prompt("Introduz os segundos: "));
+  let totalSegundos = parseInt(prompt("Introduz os segundos: ").trim());
 
   let horas = Math.floor(totalSegundos / 3600);
   let resto = totalSegundos % 3600;
   let minutos = Math.floor(resto / 60);
   let segundos = resto % 60;
 
-  console.log(horas + " hora(s), " +
-              minutos + " minuto(s) e " +
-              segundos + " segundo(s).");
+  console.log(horas + " hora(s), " + minutos + " minuto(s) e " + segundos + " segundo(s).");
 }
 
 //////////////////////////////////////////////////////
 
 function exercicio2() {
-  let num1 = parseInt(prompt("Número 1: "));
-  let num2 = parseInt(prompt("Número 2: "));
-  let num3 = parseInt(prompt("Número 3: "));
+  let num1 = parseInt(prompt("Número 1: ").trim());
+  let num2 = parseInt(prompt("Número 2: ").trim());
+  let num3 = parseInt(prompt("Número 3: ").trim());
 
   let maior = num1;
   let menor = num1;
@@ -98,8 +96,8 @@ function exercicio2() {
 //////////////////////////////////////////////////////
 
 function exercicio3() {
-  let num1 = parseInt(prompt("Número 1: "));
-  let num2 = parseInt(prompt("Número 2: "));
+  let num1 = parseInt(prompt("Número 1: ").trim());
+  let num2 = parseInt(prompt("Número 2: ").trim());
 
   if (num1 < num2) {
     console.log("Crescente:", num1 + ", " + num2);
@@ -113,8 +111,8 @@ function exercicio3() {
 //////////////////////////////////////////////////////
 
 function exercicio4() {
-  let saldo = parseFloat(prompt("Saldo inicial: "));
-  let cheque = parseFloat(prompt("Valor do cheque: "));
+  let saldo = parseFloat(prompt("Saldo inicial: ").trim());
+  let cheque = parseFloat(prompt("Valor do cheque: ").trim());
 
   if (cheque <= saldo) {
     saldo -= cheque;
@@ -127,9 +125,9 @@ function exercicio4() {
 //////////////////////////////////////////////////////
 
 function exercicio5() {
-  let num1 = parseInt(prompt("Número 1: "));
-  let num2 = parseInt(prompt("Número 2: "));
-  let num3 = parseInt(prompt("Número 3: "));
+  let num1 = parseInt(prompt("Número 1: ").trim());
+  let num2 = parseInt(prompt("Número 2: ").trim());
+  let num3 = parseInt(prompt("Número 3: ").trim());
 
   let menor, meio, maior;
 
@@ -164,8 +162,8 @@ function exercicio5() {
 //////////////////////////////////////////////////////
 
 function exercicio6() {
-  let nome = prompt("Nome do cliente: ");
-  let compra = parseFloat(prompt("Valor da compra: "));
+  let nome = prompt("Nome do cliente: ").trim();
+  let compra = parseFloat(prompt("Valor da compra: ").trim());
   let desconto = 0;
 
   if (compra <= 200) {
@@ -189,22 +187,22 @@ function exercicio6() {
 //////////////////////////////////////////////////////
 
 function exercicio7() {
-  let num1 = parseFloat(prompt("Nota 1 (0-20): "));
+  let num1 = parseFloat(prompt("Nota 1 (0-20): ").trim());
   while (num1 < 0 || num1 > 20 || isNaN(num1)) {
     console.log("Nota inválida. Introduz uma nota entre 0 e 20.");
-    num1 = parseFloat(prompt("Nota 1 (0-20): "));
+    num1 = parseFloat(prompt("Nota 1 (0-20): ").trim());
   }
 
-  let num2 = parseFloat(prompt("Nota 2 (0-20): "));
+  let num2 = parseFloat(prompt("Nota 2 (0-20): ").trim());
   while (num2 < 0 || num2 > 20 || isNaN(num2)) {
     console.log("Nota inválida. Introduz uma nota entre 0 e 20.");
-    num2 = parseFloat(prompt("Nota 2 (0-20): "));
+    num2 = parseFloat(prompt("Nota 2 (0-20): ").trim());
   }
 
-  let num3 = parseFloat(prompt("Nota 3 (0-20): "));
+  let num3 = parseFloat(prompt("Nota 3 (0-20): ").trim());
   while (num3 < 0 || num3 > 20 || isNaN(num3)) {
     console.log("Nota inválida. Introduz uma nota entre 0 e 20.");
-    num3 = parseFloat(prompt("Nota 3 (0-20): "));
+    num3 = parseFloat(prompt("Nota 3 (0-20): ").trim());
   }
 
   let media = (num1 * 2 + num2 * 3 + num3 * 5) / 10;
@@ -224,11 +222,11 @@ function exercicio8() {
   let notas = [];
 
   for (let maxNotas = 0; maxNotas < 10; maxNotas++) {
-    let nota = parseFloat(prompt("Nota " + (maxNotas + 1) + " (0-20): "));
+    let nota = parseFloat(prompt("Nota " + (maxNotas + 1) + " (0-20): ").trim());
 
     while (nota < 0 || nota > 20 || isNaN(nota)) {
       console.log("Nota inválida. Introduz uma nota entre 0 e 20.");
-      nota = parseFloat(prompt("Nota " + (maxNotas + 1) + " (0-20): "));
+      nota = parseFloat(prompt("Nota " + (maxNotas + 1) + " (0-20): ").trim());
     }
 
     notas.push(nota);
@@ -251,7 +249,7 @@ function exercicio8() {
 //////////////////////////////////////////////////////
 
 function exercicioSwitch() {
-  let mes = parseInt(prompt("Número do mês (1-12): "));
+  let mes = parseInt(prompt("Número do mês (1-12): ").trim());
 
   switch (mes) {
     case 1:
@@ -302,7 +300,7 @@ function exercicioLoop() {
   let impares = 0;
 
   for (let maxNumeros = 0; maxNumeros < 10; maxNumeros++) {
-    let numero = parseInt(prompt("Número " + (maxNumeros+1) + ": "));
+    let numero = parseInt(prompt("Número " + (maxNumeros+1) + ": ").trim());
 
     if (numero % 2 === 0) pares++;
     else impares++;
