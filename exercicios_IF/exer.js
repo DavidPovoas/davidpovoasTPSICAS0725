@@ -245,7 +245,7 @@ function exercicio8() {
   }
 
   console.log("Média:", media.toFixed(2));
-  console.log("Notas acima da média:", acimaMedia);8
+  console.log("Notas acima da média:", acimaMedia);
 }
 
 //////////////////////////////////////////////////////
