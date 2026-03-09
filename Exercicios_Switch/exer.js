@@ -103,26 +103,68 @@ function exercicio2() {
 //////////////////////////////////////////////////////
 
 function exercicio3() {
+  const tipoPedido = prompt("Tipo (compra/venda): ").toLowerCase().trim();
+  const valorPedido = parseFloat(prompt("Valor (€): ").trim());
 
-
+  if (tipoPedido === "compra") {
+    console.log(`Compra de ${valorPedido}€`);
+  } else if (tipoPedido === "venda") {
+    console.log(`Venda de ${valorPedido}€`);
+  } else {
+    console.log("Pedido desconhecido");
+  }
 }
 
 //////////////////////////////////////////////////////
 
 function exercicio4() {
-
+    const valorIntroduzido = prompt("Introduz um valor: ").trim();
+    const tentativaNumero = Number(valorIntroduzido);
+    if (valorIntroduzido.startsWith("[") && valorIntroduzido.endsWith("]")) {
+        console.log("Lista");
+    } else if (!isNaN(tentativaNumero) && valorIntroduzido !== "") {
+        if (Number.isInteger(tentativaNumero)) {
+            console.log("Número inteiro");
+        } else {
+            console.log("Número decimal");
+    }
+    } else if (valorIntroduzido !== "") {
+        console.log("String textual");
+    } else {
+        console.log("Tipo desconhecido");
+  }
 }
 
 //////////////////////////////////////////////////////
 
 function exercicio5() {
-
+    const mensagemRecebida = prompt("Mensagem: ").toLowerCase().trim();
+    if (mensagemRecebida === "olá" || mensagemRecebida === "ola" || mensagemRecebida === "bom dia") {
+        console.log("Saudação");
+    } else if (mensagemRecebida.endsWith("?")) {
+        console.log("Pergunta");
+    } else if (mensagemRecebida.includes("tchau") || mensagemRecebida.includes("adeus")) {
+        console.log("Despedida");
+    } else {
+        console.log("Mensagem genérica");
+  }
 }
 
 //////////////////////////////////////////////////////
 
 function exercicio6() {
+    const statusServidor = prompt("Status (ok/erro): ").toLowerCase().trim();
+    const tempoRespostaMs = parseInt(prompt("Tempo de resposta (ms): ").trim());
 
+    if (statusServidor === "ok" && tempoRespostaMs > 200) {
+        console.log("Servidor lento");
+    } else if (statusServidor === "ok") {
+        console.log("Servidor ativo");
+    } else if (statusServidor === "erro") {
+        console.log("Servidor indisponível");
+    } else {
+        console.log("Estado desconhecido");
+  }
 }
 
 //////////////////////////////////////////////////////
