@@ -20,26 +20,26 @@ function menu() {
     opcao = parseInt(prompt("Escolhe uma opção: "));
 
     switch (opcao) {
-      case 1: 
-        exercicio1(); 
+      case 1:
+        exercicio1();
         break;
-      case 2: 
-        exercicio2(); 
+      case 2:
+        exercicio2();
         break;
-      case 3: 
-        exercicio3(); 
+      case 3:
+        exercicio3();
         break;
-      case 4: 
-        exercicio4(); 
+      case 4:
+        exercicio4();
         break;
-      case 5: 
-        exercicio5(); 
+      case 5:
+        exercicio5();
         break;
-      case 6: 
-        exercicio6(); 
+      case 6:
+        exercicio6();
         break;
-      case 7: 
-        exercicio7(); 
+      case 7:
+        exercicio7();
         break;
       case 8:
         exercicio8();
@@ -255,19 +255,19 @@ function exercicioSwitch() {
     case 1:
       console.log("Janeiro");
       break;
-    case 2: 
+    case 2:
       console.log("Fevereiro");
       break;
-    case 3: 
+    case 3:
       console.log("Março");
       break;
-    case 4: 
+    case 4:
       console.log("Abril");
       break;
-    case 5: 
-      console.log("Maio"); 
+    case 5:
+      console.log("Maio");
       break;
-    case 6: 
+    case 6:
       console.log("Junho");
       break;
     case 7:
@@ -276,19 +276,19 @@ function exercicioSwitch() {
     case 8:
       console.log("Agosto");
       break;
-    case 9: 
-      console.log("Setembro"); 
+    case 9:
+      console.log("Setembro");
       break;
-    case 10: 
-      console.log("Outubro"); 
+    case 10:
+      console.log("Outubro");
       break;
-    case 11: 
-      console.log("Novembro"); 
+    case 11:
+      console.log("Novembro");
       break;
-    case 12: 
-      console.log("Dezembro"); 
+    case 12:
+      console.log("Dezembro");
       break;
-    default: 
+    default:
       console.log("Mês inválido");
   }
 }
@@ -300,7 +300,7 @@ function exercicioLoop() {
   let impares = 0;
 
   for (let maxNumeros = 0; maxNumeros < 10; maxNumeros++) {
-    let numero = parseInt(prompt("Número " + (maxNumeros+1) + ": ").trim());
+    let numero = parseInt(prompt("Número " + (maxNumeros + 1) + ": ").trim());
 
     if (numero % 2 === 0) pares++;
     else impares++;
