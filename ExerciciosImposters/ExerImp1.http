@@ -1,0 +1,424 @@
+# Ex 0 — criar o imposter base (só uma vez)
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3000,
+  "protocol": "http"
+}
+
+### ver se foi criado
+GET http://localhost:2525/imposters/3000
+
+### testar que da 404 sem stubs
+GET http://localhost:3000/qualquer-coisa
+
+#-----------------------------------------------------
+
+# Ex 1 - stub lista de marcas
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/marcas"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, 
+      "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3000/api/marcas
+
+#-----------------------------------------------------
+
+# Ex 2 - stub pesquisa de carros por marca
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, 
+      "body": {"brand": "Toyota", 
+      "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
+    ]
+  }
+}
+
+### testar com brand=Toyota
+GET http://localhost:3000/api/cars?brand=Toyota
+
+#-----------------------------------------------------
+
+# Ex 3 - stub GET /api/cars sem parâmetros
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/cars"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
+    ]
+  }
+}
+
+### testar sem query
+GET http://localhost:3000/api/cars
+
+#-----------------------------------------------------
+
+# Ex 4 - login bem sucedido
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/login", "headers": {"Content-Type": "application/json"}}},
+      {"deepEquals": {"body": {"username": "admin", "password": "secret"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"status": "ok", "token": "validtoken"}}}
+    ]
+  }
+}
+
+### testar login correcto
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{"username":"admin","password":"secret"}
+
+#-----------------------------------------------------
+
+# Ex 5 - login com credenciais inválidas
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/login"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 401, "headers": {"Content-Type": "application/json"}, "body": {"error": "invalid_credentials"}}}
+    ]
+  }
+}
+
+### testar login errado
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{"username":"hacker","password":"1234"}
+
+#-----------------------------------------------------
+
+# Ex 6 - email duplicado
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/users", "headers": {"Content-Type": "application/json"}}},
+      {"contains": {"body": "\"email\":\"exists@example.com\""}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 409, "headers": {"Content-Type": "application/json"}, "body": {"error": "email_exists", "message": "este email já está registado"}}}
+    ]
+  }
+}
+
+### testar email duplicado
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{"nome":"David","email":"exists@example.com","idade":25}
+
+#-----------------------------------------------------
+
+# Ex 7 - criar utilizador com sucesso
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/users", "headers": {"Content-Type": "application/json"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 201, "headers": {"Content-Type": "application/json", "Location": "/api/users/42"}, "body": {"id": 42, "status": "created", 
+      "message": "utilizador criado com sucesso"}}}
+    ]
+  }
+}
+
+### testar email novo
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{"nome":"David","email":"david@exemplo.com","idade":25}
+
+#-----------------------------------------------------
+
+# Ex 8 - temperatura sem campo value
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/temperature", "headers": {"Content-Type": "application/json"}}},
+      {"not": {"contains": {"body": "value"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 400, "headers": {"Content-Type": "application/json"}, "body": {"error": "missing_field", "message": "o campo value é obrigatório"}}}
+    ]
+  }
+}
+
+### testar sem value
+POST http://localhost:3000/api/temperature
+Content-Type: application/json
+
+{"sensor_id": 1}
+
+#-----------------------------------------------------
+
+# Ex 9 - temperatura com campo value
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/temperature", "headers": {"Content-Type": "application/json"}}},
+      {"contains": {"body": "value"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 201, "headers": {"Content-Type": "application/json"}, "body": {"status": "created", "message": "medição registada com sucesso"}}}
+    ]
+  }
+}
+
+### testar com value
+POST http://localhost:3000/api/temperature
+Content-Type: application/json
+
+{"sensor_id":1,"value":23.5}
+
+#-----------------------------------------------------
+
+# Ex 10 - tarefa duplicada
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/tasks", "headers": {"Content-Type": "application/json"}}},
+      {"contains": {"body": "\"title\":\"duplicate\""}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 409, "headers": {"Content-Type": "application/json"}, "body": {"error": "duplicate_task"}}}
+    ]
+  }
+}
+
+### testar tarefa duplicada
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{"title":"duplicate"}
+
+#-----------------------------------------------------
+
+# Ex 11 - criar tarefa com sucesso
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/tasks", "headers": {"Content-Type": "application/json"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 201, "headers": {"Content-Type": "application/json", "Location": "/api/tasks/1"}, "body": {"id": 1, "status": "created"}}}
+    ]
+  }
+}
+
+### testar tarefa nova
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{"title":"a minha tarefa"}
+
+#-----------------------------------------------------
+
+# Ex 12 - autenticação com token
+
+### adicionar stub sucesso
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/auth", "headers": {"Content-Type": "application/json"}}},
+      {"deepEquals": {"body": {"username": "user1", "password": "pass1"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"token": "validtoken", "expires_in": 3600}}}
+    ]
+  }
+}
+
+### adicionar stub falha
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/auth"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 401, "headers": {"Content-Type": "application/json"}, "body": {"error": "invalid_credentials"}}}
+    ]
+  }
+}
+
+### testar credenciais certas
+POST http://localhost:3000/api/auth
+Content-Type: application/json
+
+{"username":"user1","password":"pass1"}
+
+### testar credenciais erradas
+POST http://localhost:3000/api/auth
+Content-Type: application/json
+
+{"username":"hacker","password":"1234"}
+
+#-----------------------------------------------------
+
+# Ex 13 - perfil protegido com token
+
+### adicionar stub com token válido
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/profile", "headers": {"Authorization": "Bearer validtoken"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"username": "user1", "email": "user1@exemplo.com"}}}
+    ]
+  }
+}
+
+### adicionar stub sem token ou token inválido
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/profile"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 403, "headers": {"Content-Type": "application/json"}, "body": {"error": "forbidden"}}}
+    ]
+  }
+}
+
+### testar com token válido
+GET http://localhost:3000/api/profile
+Authorization: Bearer validtoken
+
+### testar sem token
+GET http://localhost:3000/api/profile
+
+#-----------------------------------------------------
+
+# Ex 14 - POST sem Content-Type obrigatório
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 415, "headers": {"Content-Type": "application/json"}, "body": {"error": "unsupported_media_type", 
+      "message": "Content-Type application/json é obrigatório"}}}
+    ]
+  }
+}
+
+### testar POST sem Content-Type
+POST http://localhost:3000/api/qualquer-coisa
+
+#-----------------------------------------------------
+
+# Ex 15 - fallback 404 para GETs não definidos
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 404, "headers": {"Content-Type": "application/json"}, "body": {"error": "not_found"}}}
+    ]
+  }
+}
+
+### testar caminho não definido
+GET http://localhost:3000/api/nao-existe

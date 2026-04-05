@@ -1,0 +1,36 @@
+# API 1 - Gestão de Alunos
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3001,
+  "protocol": "http"
+}
+
+#-----------------------------------------------------
+
+# GET /api/alunos - lista todos os alunos
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/alunos"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, 
+      "body": 
+      {"alunos": [{"id": 1, "nome": "David", "idade": 20, "curso": "Informática"}, 
+      {"id": 2, "nome": "Ana", "idade": 22, "curso": "Design"}]}}}
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3001/api/alunos
+
