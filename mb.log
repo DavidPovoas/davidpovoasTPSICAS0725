@@ -1,0 +1,54 @@
+{"level":"info","message":"[mb:2525] mountebank v2.9.1 now taking orders - point your browser to http://localhost:2525/ for help","timestamp":"2026-04-05T18:15:46.537Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:16:21.520Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:16:25.874Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:16:25.885Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:08.426Z"}
+{"level":"error","message":"[mb:2525] error creating imposter: {\"code\":\"EADDRINUSE\",\"errno\":-4091,\"syscall\":\"listen\",\"address\":\"::\",\"port\":3000,\"message\":\"listen EADDRINUSE: address already in use :::3000\",\"name\":\"Error\",\"stack\":\"Error: listen EADDRINUSE: address already in use :::3000\\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\\n    at listenInCluster (node:net:1997:12)\\n    at Server.listen (node:net:2102:7)\\n    at C:\\\\Users\\\\AutisMaximus\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\5f0137fb23bf353b\\\\node_modules\\\\mountebank\\\\src\\\\models\\\\http\\\\baseHttpServer.js:172:20\\n    at new Promise (<anonymous>)\\n    at create (C:\\\\Users\\\\AutisMaximus\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\5f0137fb23bf353b\\\\node_modules\\\\mountebank\\\\src\\\\models\\\\http\\\\baseHttpServer.js:158:16)\\n    at Object.createServer (C:\\\\Users\\\\AutisMaximus\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\5f0137fb23bf353b\\\\node_modules\\\\mountebank\\\\src\\\\models\\\\protocols.js:35:34)\\n    at C:\\\\Users\\\\AutisMaximus\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\5f0137fb23bf353b\\\\node_modules\\\\mountebank\\\\src\\\\models\\\\imposter.js:198:22\\n    at new Promise (<anonymous>)\\n    at Object.create (C:\\\\Users\\\\AutisMaximus\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\5f0137fb23bf353b\\\\node_modules\\\\mountebank\\\\src\\\\models\\\\imposter.js:192:12)\"}","timestamp":"2026-04-05T18:17:08.428Z"}
+{"level":"info","message":"[mb:2525] GET /imposters/3000","timestamp":"2026-04-05T18:17:09.918Z"}
+{"level":"info","message":"[mb:2525] GET /imposters/3000","timestamp":"2026-04-05T18:17:12.802Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:59202 => GET /qualquer-coisa","timestamp":"2026-04-05T18:17:13.719Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2026-04-05T18:17:13.722Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:16.438Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:16.440Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:18.432Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:18.435Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:59353 => GET /api/marcas","timestamp":"2026-04-05T18:17:20.518Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:22.400Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:22.402Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:23.413Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:23.416Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:49979 => GET /api/cars?brand=Toyota","timestamp":"2026-04-05T18:17:25.831Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:49999 => GET /api/cars","timestamp":"2026-04-05T18:17:26.712Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2026-04-05T18:17:26.713Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:28.242Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:28.243Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:29.104Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:29.108Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:63857 => GET /api/cars","timestamp":"2026-04-05T18:17:31.207Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:63883 => GET /api/cars?brand=Toyota","timestamp":"2026-04-05T18:17:32.377Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:33.882Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:33.883Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:34.667Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:34.670Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:63968 => POST /api/login","timestamp":"2026-04-05T18:17:36.928Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:38.690Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:38.692Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:40.395Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:40.398Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:59922 => POST /api/login","timestamp":"2026-04-05T18:17:43.392Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:59966 => POST /api/login","timestamp":"2026-04-05T18:17:44.860Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:17:46.586Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:17:46.587Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:17:48.297Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:17:48.301Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:54345 => POST /api/users","timestamp":"2026-04-05T18:17:51.421Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:27:14.782Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:27:14.783Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:27:15.827Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:27:15.831Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:49788 => POST /api/users","timestamp":"2026-04-05T18:27:19.840Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3000","timestamp":"2026-04-05T18:28:33.218Z"}
+{"level":"info","message":"[http:3000] Ciao for now","timestamp":"2026-04-05T18:28:33.219Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-05T18:28:34.523Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2026-04-05T18:28:34.525Z"}
+{"level":"info","message":"[http:3000] ::ffff:127.0.0.1:49677 => POST /api/users","timestamp":"2026-04-05T18:28:37.222Z"}

@@ -1,4 +1,4 @@
-# Ex 0 — Preparação inicial
+# Ex 0 — criar o imposter base (só uma vez)
 
 ### criar o imposter
 POST http://localhost:2525/imposters
@@ -19,26 +19,19 @@ GET http://localhost:3000/qualquer-coisa
 
 # Ex 1 - stub lista de marcas
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stub das marcas
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/marcas"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
+    ]
+  }
 }
 
 ### testar
@@ -48,289 +41,171 @@ GET http://localhost:3000/api/marcas
 
 # Ex 2 - stub pesquisa de carros por marca
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stubs ex1 + ex2
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
+    ]
+  }
 }
 
 ### testar com brand=Toyota
 GET http://localhost:3000/api/cars?brand=Toyota
 
-### teste negativo sem query
-GET http://localhost:3000/api/cars
-
 #-----------------------------------------------------
 
 # Ex 3 - stub GET /api/cars sem parâmetros
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stubs ex1 + ex2 + ex3
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "GET", "path": "/api/cars"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
+    ]
+  }
 }
 
 ### testar sem query
 GET http://localhost:3000/api/cars
 
-### confirmar que ex2 ainda funciona
-GET http://localhost:3000/api/cars?brand=Toyota
-
 #-----------------------------------------------------
 
 # Ex 4 - login bem sucedido
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stubs ex1 ao ex4
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/login", "headers": {"Content-Type": "application/json"}}},
-        {"deepEquals": {"body": {"username": "admin", "password": "secret"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"status": "ok", "token": "validtoken"}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/login", "headers": {"Content-Type": "application/json"}}},
+      {"deepEquals": {"body": {"username": "admin", "password": "secret"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"status": "ok", "token": "validtoken"}}}
+    ]
+  }
 }
 
 ### testar login correcto
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
-{"username": "admin", "password": "secret"}
+{"username":"admin","password":"secret"}
 
 #-----------------------------------------------------
 
 # Ex 5 - login com credenciais inválidas
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stubs ex1 ao ex5
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/login", "headers": {"Content-Type": "application/json"}}},
-        {"deepEquals": {"body": {"username": "admin", "password": "secret"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"status": "ok", "token": "validtoken"}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/login"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 401, "headers": {"Content-Type": "application/json"}, "body": {"error": "invalid_credentials"}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/login"}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 401, "headers": {"Content-Type": "application/json"}, "body": {"error": "invalid_credentials"}}}
+    ]
+  }
 }
 
 ### testar login errado
 POST http://localhost:3000/api/login
 Content-Type: application/json
 
-{"username": "hacker", "password": "1234"}
-
-### confirmar que ex4 ainda funciona
-POST http://localhost:3000/api/login
-Content-Type: application/json
-
-{"username": "admin", "password": "secret"}
+{"username":"hacker","password":"1234"}
 
 #-----------------------------------------------------
 
 # Ex 6 - email duplicado
 
-### apagar e recriar
-DELETE http://localhost:2525/imposters/3000
-
-### criar imposter com stubs ex1 ao ex6
-POST http://localhost:2525/imposters
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
 Content-Type: application/json
 
 {
-  "port": 3000,
-  "protocol": "http",
-  "stubs": [
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/marcas"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"marcas": ["Toyota", "Audi", "Ford", "Volvo", "Honda"]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars", "query": {"brand": "Toyota"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"brand": "Toyota", "results": [{"id": 1, "modelo": "Corolla", "preco": 25000}, {"id": 2, "modelo": "Yaris", "preco": 18000}]}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "GET", "path": "/api/cars"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"results": []}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/login", "headers": {"Content-Type": "application/json"}}},
-        {"deepEquals": {"body": {"username": "admin", "password": "secret"}}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": {"status": "ok", "token": "validtoken"}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/login"}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 401, "headers": {"Content-Type": "application/json"}, "body": {"error": "invalid_credentials"}}}
-      ]
-    },
-    {
-      "predicates": [
-        {"equals": {"method": "POST", "path": "/api/users", "headers": {"Content-Type": "application/json"}}},
-        {"contains": {"body": "\"email\":\"exists@example.com\""}}
-      ],
-      "responses": [
-        {"is": {"statusCode": 409, "headers": {"Content-Type": "application/json"}, "body": {"error": "email_exists", "message": "este email já está registado"}}}
-      ]
-    }
-  ]
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/users", "headers": {"Content-Type": "application/json"}}},
+      {"contains": {"body": "\"email\":\"exists@example.com\""}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 409, "headers": {"Content-Type": "application/json"}, "body": {"error": "email_exists", "message": "este email já está registado"}}}
+    ]
+  }
 }
 
 ### testar email duplicado
 POST http://localhost:3000/api/users
 Content-Type: application/json
 
-{"nome": "David", "email":"exists@example.com", "idade": 25}
+{"nome":"David","email":"exists@example.com","idade":25}
+
+#-----------------------------------------------------
+
+# Ex 7 - criar utilizador com sucesso
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/users", "headers": {"Content-Type": "application/json"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 201, "headers": {"Content-Type": "application/json", "Location": "/api/users/42"}, "body": {"id": 42, "status": "created", "message": "utilizador criado com sucesso"}}}
+    ]
+  }
+}
+
+### testar email novo
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{"nome":"David","email":"david@exemplo.com","idade":25}
+
+#-----------------------------------------------------
+
+# Ex 8 - temperatura sem campo value
+
+### adicionar stub
+POST http://localhost:2525/imposters/3000/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {"equals": {"method": "POST", "path": "/api/temperature", "headers": {"Content-Type": "application/json"}}},
+      {"not": {"contains": {"body": "value"}}}
+    ],
+    "responses": [
+      {"is": {"statusCode": 400, "headers": {"Content-Type": "application/json"}, "body": {"error": "missing_field", "message": "o campo value é obrigatório"}}}
+    ]
+  }
+}
+
+### testar sem value
+POST http://localhost:3000/api/temperature
+Content-Type: application/json
+
+{"sensor_id": 1}
 
