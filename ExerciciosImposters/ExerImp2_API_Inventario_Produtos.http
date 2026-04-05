@@ -1,0 +1,363 @@
+#=====================================================
+
+# API 2 - Gestão de Inventário de Produtos
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3002,
+  "protocol": "http"
+}
+
+#-----------------------------------------------------
+
+# GET /api/produtos - lista todos os produtos
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/produtos"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "produtos": [
+              { "id": 1, "nome": "Teclado", "preco": 29.99, "quantidade": 50 },
+              { "id": 2, "nome": "Rato", "preco": 19.99, "quantidade": 30 }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3002/api/produtos
+
+#-----------------------------------------------------
+
+# GET /api/produtos/{id} - detalhes de um produto
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/produtos/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "nome": "Teclado",
+            "preco": 29.99,
+            "quantidade": 50
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# GET /api/produtos/{id} - produto não existe
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/produtos/99"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "produto não encontrado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar produto existente
+GET http://localhost:3002/api/produtos/1
+
+### testar produto inexistente
+GET http://localhost:3002/api/produtos/99
+
+#-----------------------------------------------------
+
+# POST /api/produtos - quantidade negativa (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/produtos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"quantidade\":-" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "quantidade_invalida",
+            "message": "Valor inválido"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar quantidade negativa
+POST http://localhost:3002/api/produtos
+Content-Type: application/json
+
+{"nome":"Monitor","preco":199.99,"quantidade":-5}
+
+#-----------------------------------------------------
+
+# POST /api/produtos - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/produtos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "produto adicionado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar post válido
+POST http://localhost:3002/api/produtos
+Content-Type: application/json
+
+{"nome":"Monitor","preco":199.99,"quantidade":10}
+
+#-----------------------------------------------------
+
+# PUT /api/produtos/{id}/stock - atualizar stock
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/produtos/1/stock",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "nome": "Teclado",
+            "quantidade": 60,
+            "message": "stock atualizado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# PUT /api/produtos/{id}/stock - produto inexistente
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/produtos/99/stock",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "produto não encontrado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar stock válido
+PUT http://localhost:3002/api/produtos/1/stock
+Content-Type: application/json
+
+{"quantidade": 10}
+
+### testar produto inexistente
+PUT http://localhost:3002/api/produtos/99/stock
+Content-Type: application/json
+
+{"quantidade": 10}
+
+#-----------------------------------------------------
+
+# DELETE /api/produtos/{id} - stock zero (pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/produtos/2"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "status": "deleted",
+            "message": "produto removido com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# DELETE /api/produtos/{id} - stock não zero (não pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3002/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/produtos/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "stock_nao_zero",
+            "message": "só é possível apagar produtos com stock zero"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar delete com stock zero
+DELETE http://localhost:3002/api/produtos/2
+
+### testar delete com stock não zero
+DELETE http://localhost:3002/api/produtos/1
+
