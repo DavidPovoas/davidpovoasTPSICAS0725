@@ -20,13 +20,26 @@ Content-Type: application/json
 {
   "stub": {
     "predicates": [
-      {"equals": {"method": "GET", "path": "/api/alunos"}}
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/alunos"
+        }
+      }
     ],
     "responses": [
-      {"is": {"statusCode": 200, "headers": {"Content-Type": "application/json"}, 
-      "body": 
-      {"alunos": [{"id": 1, "nome": "David", "idade": 20, "curso": "Informática"}, 
-      {"id": 2, "nome": "Ana", "idade": 22, "curso": "Design"}]}}}
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "alunos": [
+              { "id": 1, "nome": "David", "idade": 30, "curso": "Informática" },
+              { "id": 2, "nome": "Ana", "idade": 22, "curso": "Design" }
+            ]
+          }
+        }
+      }
     ]
   }
 }
@@ -34,3 +47,279 @@ Content-Type: application/json
 ### testar
 GET http://localhost:3001/api/alunos
 
+#-----------------------------------------------------
+
+# GET /api/alunos/{id} - mostra um aluno específico
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/alunos/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "nome": "David",
+            "idade": 30,
+            "curso": "Informática"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3001/api/alunos/1
+
+#-----------------------------------------------------
+
+# POST /api/alunos - idade inválida (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/alunos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"idade\":5" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "idade_invalida",
+            "message": "Idade mínima não atingida"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar idade inválida
+POST http://localhost:3001/api/alunos
+Content-Type: application/json
+
+{"nome":"Carlos","idade":5,"curso":"Informática"}
+
+#-----------------------------------------------------
+
+# POST /api/alunos - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/alunos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "aluno adicionado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar post válido
+POST http://localhost:3001/api/alunos
+Content-Type: application/json
+
+{"nome":"Carlos","idade":18,"curso":"Informática"}
+
+#-----------------------------------------------------
+
+# PUT /api/alunos/{id} - atualizar aluno existente
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/alunos/1",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "status": "updated",
+            "message": "aluno atualizado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar put válido
+PUT http://localhost:3001/api/alunos/1
+Content-Type: application/json
+
+{"nome":"David Silva","idade":21,"curso":"Informática"}
+
+#-----------------------------------------------------
+
+# PUT /api/alunos/{id} - aluno não existe
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/alunos/99",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "aluno não encontrado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar put aluno inexistente
+PUT http://localhost:3001/api/alunos/99
+Content-Type: application/json
+
+{"nome":"Ninguém","idade":25,"curso":"Design"}
+
+#-----------------------------------------------------
+
+# DELETE /api/alunos/{id} - admin pode apagar
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/alunos/1",
+          "headers": { "Authorization": "Bearer admintoken" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "status": "deleted",
+            "message": "aluno removido com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# DELETE /api/alunos/{id} - sem permissões
+
+### adicionar stub
+POST http://localhost:2525/imposters/3001/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/alunos/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 403,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "forbidden",
+            "message": "só administradores podem apagar alunos"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar delete com permissão
+DELETE http://localhost:3001/api/alunos/1
+Authorization: Bearer admintoken
+
+### testar delete sem permissão
+DELETE http://localhost:3001/api/alunos/1
