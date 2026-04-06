@@ -41,3 +41,19 @@
 {"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:04:54.638Z"}
 {"level":"info","message":"[http:3004] ::ffff:127.0.0.1:49721 => DELETE /api/livros/1","timestamp":"2026-04-06T09:04:56.699Z"}
 {"level":"info","message":"[http:3004] ::ffff:127.0.0.1:54619 => DELETE /api/livros/2","timestamp":"2026-04-06T09:05:06.833Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-06T09:10:08.618Z"}
+{"level":"info","message":"[http:3005] Open for business...","timestamp":"2026-04-06T09:10:08.620Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:10:11.112Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:51623 => GET /api/funcionarios","timestamp":"2026-04-06T09:10:12.711Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:15:26.098Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:49185 => POST /api/funcionarios","timestamp":"2026-04-06T09:15:28.684Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:15:39.099Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:49195 => POST /api/funcionarios","timestamp":"2026-04-06T09:15:41.802Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:16:13.059Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:64385 => PUT /api/funcionarios/1/salario","timestamp":"2026-04-06T09:16:15.486Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:16:24.935Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:64399 => PUT /api/funcionarios/1/salario","timestamp":"2026-04-06T09:16:26.889Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:17:27.843Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3005/stubs","timestamp":"2026-04-06T09:17:29.861Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:61882 => DELETE /api/funcionarios/2","timestamp":"2026-04-06T09:17:31.530Z"}
+{"level":"info","message":"[http:3005] ::ffff:127.0.0.1:65370 => DELETE /api/funcionarios/1","timestamp":"2026-04-06T09:17:40.011Z"}

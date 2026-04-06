@@ -1,0 +1,290 @@
+#=====================================================
+
+# API 5 - Gestão de Funcionários
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3005,
+  "protocol": "http"
+}
+
+#-----------------------------------------------------
+
+# GET /api/funcionarios - lista todos os funcionários
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/funcionarios"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "funcionarios": [
+              { "id": 1, "nome": "David", "cargo": "Programador", "salario": 1500 },
+              { "id": 2, "nome": "Ana", "cargo": "Designer", "salario": 1200 }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3005/api/funcionarios
+
+#-----------------------------------------------------
+
+# POST /api/funcionarios - salário abaixo do mínimo (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/funcionarios",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"salario\":500" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "salario_invalido",
+            "message": "salário não pode ser inferior a 760€"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar salário abaixo do mínimo
+POST http://localhost:3005/api/funcionarios
+Content-Type: application/json
+
+{"nome":"Carlos","cargo":"Estagiário","salario":500}
+
+#-----------------------------------------------------
+
+# POST /api/funcionarios - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/funcionarios",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "funcionário adicionado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar post válido
+POST http://localhost:3005/api/funcionarios
+Content-Type: application/json
+
+{"nome":"Carlos","cargo":"Programador","salario":1000}
+
+#-----------------------------------------------------
+
+# PUT /api/funcionarios/{id}/salario - abaixo do mínimo (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/funcionarios/1/salario",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"salario\":500" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "salario_invalido",
+            "message": "salário não pode ser inferior a 760€"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar salário abaixo do mínimo
+PUT http://localhost:3005/api/funcionarios/1/salario
+Content-Type: application/json
+
+{"salario":500}
+
+#-----------------------------------------------------
+
+# PUT /api/funcionarios/{id}/salario - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/funcionarios/1/salario",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "status": "updated",
+            "message": "salário atualizado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar salário válido
+PUT http://localhost:3005/api/funcionarios/1/salario
+Content-Type: application/json
+
+{"salario":1800}
+
+#-----------------------------------------------------
+
+# DELETE /api/funcionarios/{id} - sem tarefas pendentes (pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/funcionarios/2"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "status": "deleted",
+            "message": "funcionário removido com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# DELETE /api/funcionarios/{id} - com tarefas pendentes (não pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3005/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/funcionarios/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "tarefas_pendentes",
+            "message": "não é possível remover um funcionário com tarefas pendentes"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar delete sem tarefas pendentes
+DELETE http://localhost:3005/api/funcionarios/2
+
+### testar delete com tarefas pendentes
+DELETE http://localhost:3005/api/funcionarios/1
