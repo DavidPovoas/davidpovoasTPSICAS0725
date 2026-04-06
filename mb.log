@@ -1,0 +1,20 @@
+{"level":"info","message":"[mb:2525] mountebank v2.9.1 now taking orders - point your browser to http://localhost:2525/ for help","timestamp":"2026-04-06T08:31:08.235Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:31:38.567Z"}
+{"level":"info","message":"[mb:2525] DELETE /imposters/3003","timestamp":"2026-04-06T08:31:42.205Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-06T08:31:44.181Z"}
+{"level":"info","message":"[http:3003] Open for business...","timestamp":"2026-04-06T08:31:44.184Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:31:46.918Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:31:52.741Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:31:54.791Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:31:57.299Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:58212 => POST /api/reservas","timestamp":"2026-04-06T08:33:44.040Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:56522 => POST /api/reservas","timestamp":"2026-04-06T08:33:52.257Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:51567 => POST /api/reservas","timestamp":"2026-04-06T08:34:01.964Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:56:57.635Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:57:00.342Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:64558 => PUT /api/reservas/1","timestamp":"2026-04-06T08:57:03.082Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:53524 => PUT /api/reservas/99","timestamp":"2026-04-06T08:57:12.827Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:57:50.887Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:57:53.969Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:54231 => DELETE /api/reservas/1","timestamp":"2026-04-06T08:57:56.372Z"}
+{"level":"info","message":"[http:3003] ::ffff:127.0.0.1:54234 => DELETE /api/reservas/2","timestamp":"2026-04-06T08:58:04.495Z"}
