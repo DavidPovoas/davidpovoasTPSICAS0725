@@ -18,3 +18,26 @@
 {"level":"info","message":"[mb:2525] POST /imposters/3003/stubs","timestamp":"2026-04-06T08:57:53.969Z"}
 {"level":"info","message":"[http:3003] ::ffff:127.0.0.1:54231 => DELETE /api/reservas/1","timestamp":"2026-04-06T08:57:56.372Z"}
 {"level":"info","message":"[http:3003] ::ffff:127.0.0.1:54234 => DELETE /api/reservas/2","timestamp":"2026-04-06T08:58:04.495Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-06T09:00:02.783Z"}
+{"level":"info","message":"[http:3004] Open for business...","timestamp":"2026-04-06T09:00:02.785Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:00:05.125Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:65211 => GET /api/livros","timestamp":"2026-04-06T09:00:07.217Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:00:58.364Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:01:00.981Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:50871 => GET /api/livros/1","timestamp":"2026-04-06T09:01:03.227Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:50876 => GET /api/livros/99","timestamp":"2026-04-06T09:01:13.505Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:02:39.424Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:62235 => POST /api/emprestimos","timestamp":"2026-04-06T09:02:44.558Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:02:47.018Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:62240 => POST /api/emprestimos","timestamp":"2026-04-06T09:02:51.559Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:57881 => POST /api/emprestimos","timestamp":"2026-04-06T09:03:07.678Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:49340 => POST /api/emprestimos","timestamp":"2026-04-06T09:03:17.671Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:03:56.679Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:03:58.846Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:64997 => PUT /api/emprestimos/1/devolucao","timestamp":"2026-04-06T09:04:00.896Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:58093 => PUT /api/emprestimos/99/devolucao","timestamp":"2026-04-06T09:04:09.864Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:04:47.324Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:04:51.326Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3004/stubs","timestamp":"2026-04-06T09:04:54.638Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:49721 => DELETE /api/livros/1","timestamp":"2026-04-06T09:04:56.699Z"}
+{"level":"info","message":"[http:3004] ::ffff:127.0.0.1:54619 => DELETE /api/livros/2","timestamp":"2026-04-06T09:05:06.833Z"}
