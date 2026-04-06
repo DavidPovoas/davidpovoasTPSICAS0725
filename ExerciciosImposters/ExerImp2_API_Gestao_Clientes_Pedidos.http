@@ -1,0 +1,492 @@
+#=====================================================
+
+# API 7 - Gestão de Clientes e Pedidos
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3007,
+  "protocol": "http"
+}
+
+#-----------------------------------------------------
+
+# GET /api/clientes - lista todos os clientes
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/clientes"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "clientes": [
+              { "id": 1, "nome": "David", "email": "david@exemplo.com" },
+              { "id": 2, "nome": "Ana", "email": "ana@exemplo.com" }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3007/api/clientes
+
+#-----------------------------------------------------
+
+# POST /api/clientes - cliente inexistente (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/clientes",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"email\":\"existe@exemplo.com\"" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 409,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "email_exists",
+            "message": "este email já está registado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar email duplicado
+POST http://localhost:3007/api/clientes
+Content-Type: application/json
+
+{"nome":"Carlos","email":"existe@exemplo.com"}
+
+#-----------------------------------------------------
+
+# POST /api/clientes - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/clientes",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "cliente adicionado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar post válido
+POST http://localhost:3007/api/clientes
+Content-Type: application/json
+
+{"nome":"Carlos","email":"carlos@exemplo.com"}
+
+#-----------------------------------------------------
+
+# GET /api/clientes/{id}/pedidos - lista pedidos do cliente
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/clientes/1/pedidos"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "cliente_id": 1,
+            "pedidos": [
+              { "id": 1, "produto": "Teclado", "quantidade": 2, "estado": "Enviado" },
+              { "id": 2, "produto": "Rato", "quantidade": 1, "estado": "Em processamento" }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# GET /api/clientes/{id}/pedidos - cliente inexistente
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/clientes/99/pedidos"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "cliente não encontrado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar pedidos de cliente existente
+GET http://localhost:3007/api/clientes/1/pedidos
+
+### testar pedidos de cliente inexistente
+GET http://localhost:3007/api/clientes/99/pedidos
+
+#-----------------------------------------------------
+
+# POST /api/pedidos - cliente inexistente (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/pedidos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"cliente_id\":99" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "cliente não encontrado"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar cliente inexistente
+POST http://localhost:3007/api/pedidos
+Content-Type: application/json
+
+{"cliente_id":99,"produto":"Teclado","quantidade":1}
+
+#-----------------------------------------------------
+
+# POST /api/pedidos - quantidade inválida (específico - segundo!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/pedidos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"quantidade\":-" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "quantidade_invalida",
+            "message": "quantidade inválida"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar quantidade inválida
+POST http://localhost:3007/api/pedidos
+Content-Type: application/json
+
+{"cliente_id":1,"produto":"Teclado","quantidade":-1}
+
+#-----------------------------------------------------
+
+# POST /api/pedidos - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/pedidos",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "pedido criado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar pedido válido
+POST http://localhost:3007/api/pedidos
+Content-Type: application/json
+
+{"cliente_id":1,"produto":"Teclado","quantidade":2}
+
+#-----------------------------------------------------
+
+# PUT /api/pedidos/{id} - estado inválido (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/pedidos/1",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"estado\":\"Cancelado\"" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "estado_invalido",
+            "message": "estado deve ser: Em processamento, Enviado ou Entregue"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar estado inválido
+PUT http://localhost:3007/api/pedidos/1
+Content-Type: application/json
+
+{"estado":"Cancelado"}
+
+#-----------------------------------------------------
+
+# PUT /api/pedidos/{id} - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/pedidos/1",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "status": "updated",
+            "message": "pedido atualizado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar estado válido
+PUT http://localhost:3007/api/pedidos/1
+Content-Type: application/json
+
+{"estado":"Enviado"}
+
+#-----------------------------------------------------
+
+# DELETE /api/pedidos/{id} - pedido em processamento (pode cancelar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/pedidos/2"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "status": "deleted",
+            "message": "pedido cancelado com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# DELETE /api/pedidos/{id} - pedido já enviado (não pode cancelar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3007/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/pedidos/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "cancelamento_nao_permitido",
+            "message": "só é possível cancelar pedidos em processamento"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar cancelar pedido em processamento
+DELETE http://localhost:3007/api/pedidos/2
+
+### testar cancelar pedido já enviado
+DELETE http://localhost:3007/api/pedidos/1

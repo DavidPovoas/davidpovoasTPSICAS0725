@@ -77,3 +77,29 @@
 {"level":"info","message":"[mb:2525] POST /imposters/3006/stubs","timestamp":"2026-04-06T09:29:15.008Z"}
 {"level":"info","message":"[http:3006] ::ffff:127.0.0.1:56826 => DELETE /api/tarefas/2","timestamp":"2026-04-06T09:29:17.176Z"}
 {"level":"info","message":"[http:3006] ::ffff:127.0.0.1:56830 => DELETE /api/tarefas/1","timestamp":"2026-04-06T09:29:24.577Z"}
+{"level":"info","message":"[mb:2525] POST /imposters","timestamp":"2026-04-06T09:47:51.220Z"}
+{"level":"info","message":"[http:3007] Open for business...","timestamp":"2026-04-06T09:47:51.221Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T09:47:52.711Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:55134 => GET /api/clientes","timestamp":"2026-04-06T09:47:54.309Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:23:50.651Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:51671 => POST /api/clientes","timestamp":"2026-04-06T10:23:53.107Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:24:03.972Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:63414 => POST /api/clientes","timestamp":"2026-04-06T10:24:06.262Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:24:46.271Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:24:48.567Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:64209 => GET /api/clientes/1/pedidos","timestamp":"2026-04-06T10:24:50.003Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:50483 => GET /api/clientes/99/pedidos","timestamp":"2026-04-06T10:24:59.779Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:26:16.996Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:62314 => POST /api/pedidos","timestamp":"2026-04-06T10:26:18.736Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:26:26.660Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:54836 => POST /api/pedidos","timestamp":"2026-04-06T10:26:28.748Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:26:35.760Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:61978 => POST /api/pedidos","timestamp":"2026-04-06T10:26:37.682Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:27:08.002Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:64213 => PUT /api/pedidos/1","timestamp":"2026-04-06T10:27:09.440Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:27:18.811Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:64218 => PUT /api/pedidos/1","timestamp":"2026-04-06T10:27:20.602Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:27:54.367Z"}
+{"level":"info","message":"[mb:2525] POST /imposters/3007/stubs","timestamp":"2026-04-06T10:27:56.917Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:58739 => DELETE /api/pedidos/2","timestamp":"2026-04-06T10:27:58.880Z"}
+{"level":"info","message":"[http:3007] ::ffff:127.0.0.1:58744 => DELETE /api/pedidos/1","timestamp":"2026-04-06T10:28:04.834Z"}
