@@ -1,0 +1,361 @@
+#=====================================================
+
+# API 6 - Gestão de Tarefas
+
+### criar o imposter
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 3006,
+  "protocol": "http"
+}
+
+#-----------------------------------------------------
+
+# GET /api/tarefas - lista todas as tarefas
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/tarefas"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "tarefas": [
+              { "id": 1, "titulo": "Estudar Mountebank", "descricao": "fazer os exercicios", "estado": "pendente" },
+              { "id": 2, "titulo": "Fazer relatório", "descricao": "entregar até sexta", "estado": "concluida" }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar
+GET http://localhost:3006/api/tarefas
+
+#-----------------------------------------------------
+
+# GET /api/tarefas/{id} - detalhes de uma tarefa
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/tarefas/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "titulo": "Estudar Mountebank",
+            "descricao": "fazer os exercicios",
+            "estado": "pendente"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# GET /api/tarefas/{id} - tarefa não existe
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "GET",
+          "path": "/api/tarefas/99"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "tarefa não encontrada"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar tarefa existente
+GET http://localhost:3006/api/tarefas/1
+
+### testar tarefa inexistente
+GET http://localhost:3006/api/tarefas/99
+
+#-----------------------------------------------------
+
+# POST /api/tarefas - título vazio (específico - primeiro!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/tarefas",
+          "headers": { "Content-Type": "application/json" }
+        }
+      },
+      {
+        "contains": { "body": "\"titulo\":\"\"" }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "titulo_vazio",
+            "message": "o título não pode estar vazio"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar título vazio
+POST http://localhost:3006/api/tarefas
+Content-Type: application/json
+
+{"titulo":"","descricao":"fazer os exercicios"}
+
+#-----------------------------------------------------
+
+# POST /api/tarefas - sucesso (genérico - depois!)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/api/tarefas",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 3,
+            "status": "created",
+            "message": "tarefa criada com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar post válido
+POST http://localhost:3006/api/tarefas
+Content-Type: application/json
+
+{"titulo":"Nova tarefa","descricao":"fazer os exercicios"}
+
+#-----------------------------------------------------
+
+# PUT /api/tarefas/{id} - alterar estado para concluida
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/tarefas/1",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "id": 1,
+            "status": "updated",
+            "message": "tarefa atualizada com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# PUT /api/tarefas/{id} - tarefa não existe
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "PUT",
+          "path": "/api/tarefas/99",
+          "headers": { "Content-Type": "application/json" }
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "not_found",
+            "message": "tarefa não encontrada"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar put válido
+PUT http://localhost:3006/api/tarefas/1
+Content-Type: application/json
+
+{"estado":"concluida"}
+
+### testar put tarefa inexistente
+PUT http://localhost:3006/api/tarefas/99
+Content-Type: application/json
+
+{"estado":"concluida"}
+
+#-----------------------------------------------------
+
+# DELETE /api/tarefas/{id} - tarefa concluida (pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/tarefas/2"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "status": "deleted",
+            "message": "tarefa eliminada com sucesso"
+          }
+        }
+      }
+    ]
+  }
+}
+
+#-----------------------------------------------------
+
+# DELETE /api/tarefas/{id} - tarefa pendente (não pode apagar)
+
+### adicionar stub
+POST http://localhost:2525/imposters/3006/stubs
+Content-Type: application/json
+
+{
+  "stub": {
+    "predicates": [
+      {
+        "equals": {
+          "method": "DELETE",
+          "path": "/api/tarefas/1"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "error": "tarefa_pendente",
+            "message": "só é possível eliminar tarefas concluídas"
+          }
+        }
+      }
+    ]
+  }
+}
+
+### testar delete tarefa concluida
+DELETE http://localhost:3006/api/tarefas/2
+
+### testar delete tarefa pendente
+DELETE http://localhost:3006/api/tarefas/1
